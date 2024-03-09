@@ -1,5 +1,7 @@
 from .circom import Circuit, Component
 
+import numpy as np
+
 # template string for circuit.py
 python_template_string = '''""" Make an interger-only circuit of the corresponding CIRCOM circuit.
 
@@ -217,7 +219,13 @@ def transpile_component(component: Component, dec: int) -> str:
         return comp_str+"\n"
     
     elif component.template.op_name == "ReLU":
-        nRows, nCols, nChannels = component.inputs[0].shape
+        if len(component.inputs[0].shape) == 3:
+            nRows, nCols, nChannels = component.inputs[0].shape
+        elif len(component.inputs[0].shape) == 1:
+            print(np.shape(component.inputs[0]))
+            nRows, nCols, nChannels = component.inputs[0].shape[0], 1, 1
+        else:
+            raise ValueError("Unsupported input data form for  ReLU")
         comp_str += "    out = ReLUInt({nRows}, {nCols}, {nChannels}, {input})\n".format(
             nRows=nRows,
             nCols=nCols,

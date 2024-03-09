@@ -1,4 +1,6 @@
 # assume all inputs are strings
+import numpy as np
+
 def AveragePooling2DInt (nRows, nCols, nChannels, poolSize, strides, input):
     out = [[[0 for _ in range(nChannels)] for _ in range((nCols-poolSize)//strides + 1)] for _ in range((nRows-poolSize)//strides + 1)]
     remainder = [[[None for _ in range(nChannels)] for _ in range((nCols-poolSize)//strides + 1)] for _ in range((nRows-poolSize)//strides + 1)]
@@ -86,6 +88,10 @@ def Flatten2DInt(nRows, nCols, nChannels, input):
     return out
 
 def ReLUInt(nRows, nCols, nChannels, input):
+    print(np.shape(input))
+    if nChannels == 1 and nCols == 1:
+        return [str(max(int(input[k]), 0)) for k in range(nRows)]
+        
     out = [[[str(max(int(input[i][j][k]), 0)) for k in range(nChannels)] for j in range(nCols)] for i in range(nRows)]
     return out
 
