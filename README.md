@@ -122,3 +122,39 @@ To test the package, you can run the following command:
 ```bash
 npm test
 ```
+
+### if you have M1 
+you should download  Miniforge
+```bash
+curl -L -o Miniforge3-MacOSX-arm64.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh"
+
+```
+install
+```bash
+bash Miniforge3-MacOSX-arm64.sh
+```
+initialize Conda 
+```bash
+source ~/miniforge3/bin/activate
+
+```
+then
+```bash
+conda init
+```
+new environment
+```bash
+conda create --name tf python=3.8
+conda activate tf
+```
+TensorFlow on Mac with support Apple Silicon
+```bash
+conda install -c apple tensorflow-deps
+pip install tensorflow-macos
+pip install tensorflow-metal
+
+```
+```bash
+pip install -r requirements.txt
+```
+
